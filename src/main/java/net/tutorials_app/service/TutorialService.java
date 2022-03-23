@@ -38,14 +38,15 @@ public class TutorialService {
 		return mapper.tutorialToTutorialResponseDto(tutorial);
 	}
 
-	public void createTutorial(final TutorialRequestDto tutorialRequestDto) {
+	public TutorialResponseDto createTutorial(final TutorialRequestDto tutorialRequestDto) {
 
 		Tutorial tutorial = mapper.tutorialRequestDtoToTutorial(tutorialRequestDto);
 		tutorialRepository.save(tutorial);
+		return mapper.tutorialToTutorialResponseDto(tutorial);
 
 	}
 
-	public void updateTutorial(final Long id, final TutorialRequestDto tutorialRequestDto) {
+	public TutorialResponseDto updateTutorial(final Long id, final TutorialRequestDto tutorialRequestDto) {
 
 		Tutorial tutorial = tutorialRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Tutorial with " + id + " not found"));
@@ -55,6 +56,7 @@ public class TutorialService {
 		tutorial.setPublished(tutorialRequestDto.getPublished());
 
 		tutorialRepository.save(tutorial);
+		return mapper.tutorialToTutorialResponseDto(tutorial);
 	}
 
 	public void deleteTutorial(final Long id) {
@@ -72,9 +74,9 @@ public class TutorialService {
 		tutorialRepository.deleteAll();
 	}
 
-	public List<TutorialResponseDto> findByPublished() {
+	public List<TutorialResponseDto> findByPublished(Boolean result) {
 
-		return getAllTutorials().stream().filter(tutorial -> tutorial.getPublished().equals(true))
+		return getAllTutorials().stream().filter(tutorial -> tutorial.getPublished().equals(result))
 				.collect(Collectors.toList());
 
 	}
