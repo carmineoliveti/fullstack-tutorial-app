@@ -53,7 +53,10 @@ public class TutorialService {
 
 	public TutorialResponseDto createTutorial(final TutorialRequestDto tutorialRequestDto) {
 
-		Tutorial tutorial = mapper.tutorialRequestDtoToTutorial(tutorialRequestDto);
+		Tutorial tutorial = new Tutorial();
+		tutorial.setTitle(tutorialRequestDto.getTitle());
+		tutorial.setDescription(tutorialRequestDto.getDescription());
+		tutorial.setPublished(false);
 		tutorialRepository.save(tutorial);
 		return mapper.tutorialToTutorialResponseDto(tutorial);
 
