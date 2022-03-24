@@ -1,6 +1,5 @@
 package net.tutorials_app.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.tutorials_app.dto.request.TutorialRequestDto;
 import net.tutorials_app.dto.response.TutorialResponseDto;
-import net.tutorials_app.model.Tutorial;
 import net.tutorials_app.service.TutorialService;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api")
 public class TutorialController {
@@ -38,7 +36,7 @@ public class TutorialController {
 	@GetMapping("/tutorials")
 	public ResponseEntity<List<TutorialResponseDto>> getAllTutorials(@RequestParam(required = false) String title) {
 		try {
-			List<TutorialResponseDto> tutorials = tutorialService.getAllTutorials();
+			List<TutorialResponseDto> tutorials = tutorialService.getAllTutorials(title);
 			return new ResponseEntity<>(tutorials, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

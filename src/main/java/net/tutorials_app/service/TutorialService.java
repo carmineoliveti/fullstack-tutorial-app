@@ -1,5 +1,6 @@
 package net.tutorials_app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +25,21 @@ public class TutorialService {
 		this.tutorialRepository = tutorialRepository;
 	}
 
-	public List<TutorialResponseDto> getAllTutorials() {
+	public List<TutorialResponseDto> getAll() {
 
 		List<Tutorial> tutorials = tutorialRepository.findAll();
+		
+		return mapper.tutorialsToTutoriaslResponseDtos(tutorials);
+	}
+	
+	public List<TutorialResponseDto> getAllTutorials(String title) {
+
+		List<Tutorial> tutorials = new ArrayList<>();
+		if(title == null)
+			tutorialRepository.findAll().forEach(tutorials::add);
+		else
+			tutorialRepository.findAll().forEach(tutorials::add);
+		
 		return mapper.tutorialsToTutoriaslResponseDtos(tutorials);
 	}
 
@@ -76,7 +89,7 @@ public class TutorialService {
 
 	public List<TutorialResponseDto> findByPublished(Boolean result) {
 
-		return getAllTutorials().stream().filter(tutorial -> tutorial.getPublished().equals(result))
+		return getAll().stream().filter(tutorial -> tutorial.getPublished().equals(result))
 				.collect(Collectors.toList());
 
 	}
