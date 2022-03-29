@@ -1,5 +1,6 @@
 package net.tutorials_app.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -91,6 +92,16 @@ public class Tutorial {
 	public String toString() {
 		return "Tutorial [id=" + id + ", title=" + title + ", description=" + description + ", published=" + published
 				+ "]";
+	}
+
+	public Boolean containsString(String title) {
+		if (this.title.contains(title))
+			return true;
+		else if (this.title.toLowerCase().contains(title))
+			return true;
+		else if (this.title.toUpperCase().contains(title))
+			return true;
+		return false;
 	}
 	
 }

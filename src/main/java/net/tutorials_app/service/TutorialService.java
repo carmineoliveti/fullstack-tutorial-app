@@ -36,9 +36,13 @@ public class TutorialService {
 
 		List<Tutorial> tutorials = new ArrayList<>();
 		if(title == null)
-			tutorialRepository.findAll().forEach(tutorials::add);
-		else
-			tutorialRepository.findAll().forEach(tutorials::add);
+			tutorials = tutorialRepository.findAll();
+		else {
+			List<Tutorial> allTutorial = tutorialRepository.findAll();
+			for(int i = 0; i < allTutorial.size(); i++)
+				if(Boolean.TRUE.equals(allTutorial.get(i).containsString(title)))
+					tutorials.add(allTutorial.get(i));
+		}
 		
 		return mapper.tutorialsToTutoriaslResponseDtos(tutorials);
 	}
@@ -56,7 +60,7 @@ public class TutorialService {
 		Tutorial tutorial = new Tutorial();
 		tutorial.setTitle(tutorialRequestDto.getTitle());
 		tutorial.setDescription(tutorialRequestDto.getDescription());
-		tutorial.setPublished(false);
+		tutorial.setPublished(true);
 		tutorialRepository.save(tutorial);
 		return mapper.tutorialToTutorialResponseDto(tutorial);
 
